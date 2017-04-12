@@ -1,3 +1,5 @@
+//Libraries
+
 import peasy.*;
 import peasy.org.apache.commons.math.*;
 import peasy.org.apache.commons.math.geometry.*;
@@ -6,6 +8,7 @@ import org.openkinect.freenect2.*;
 import org.openkinect.processing.*;
 import org.openkinect.tests.*;
 
+//Processing + 3rd party
 PGraphics inputA;
 PGraphics inputB;
 PImage depthImageA;
@@ -15,10 +18,19 @@ Kinect2 kinectB;
 
 PeasyCam cam;
 
+//My classes
+Cloud cloud;
+
+
+void settings(){
+  size(1280, 720, P3D);
+  PJOGL.profile = 1;
+}
+
 void setup() {
   depthImageA = loadImage("data/depth.png");
   depthImageB = loadImage("data/depth.png");
-  size(1280, 720, P3D);
+  
   kinectA = new Kinect2(this);
   kinectA.initDepth();
   kinectA.initIR();
@@ -31,13 +43,29 @@ void setup() {
   kinectB.initVideo();
   kinectB.initDevice();
   
-  inputA = createGraphics(kinectA.depthWidth, kinectA.depthHeight);
-  inputB = createGraphics(kinectB.depthWidth, kinectB.depthHeight);
+  inputA = createGraphics(kinectA.depthWidth, kinectA.depthHeight, P3D);
+  inputB = createGraphics(kinectB.depthWidth, kinectB.depthHeight, P3D);
+  
+  //My stuff
+  cloud = new Cloud
 }
 
 
 void draw(){
   background(0);
-  inputA.image(depthImageA, 0, 0, inputA.width, inputA.height);
-  inputB.image(depthImageB, 0, 0, inputB.width, inputB.height);
+  drawA();
+  drawB();
+  image(inputA,0,0);
+}
+
+void drawA(){
+  inputA.beginDraw();
+  
+  inputA.endDraw();
+}
+
+void drawB(){
+  inputB.beginDraw();
+  
+  inputB.endDraw();
 }
