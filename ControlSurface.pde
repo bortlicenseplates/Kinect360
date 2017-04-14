@@ -1,4 +1,5 @@
 class Controller extends PApplet{
+  ArrayList<SliderGroup> sliderGroups;
   Controller(){
     super();
     PApplet.runSketch(new String[] {
@@ -10,19 +11,48 @@ class Controller extends PApplet{
     size(500,600);
   }
   void setup(){
+    sliderGroups = new ArrayList<SliderGroup>();
     background(0);
+    createSliderGroups();
   }
   
   void draw(){
+    background(255);
+    for (SliderGroup g : sliderGroups){
+      g.update();
+    }
   }
   
-  void addSlider(int x, int y, int w, int h, String label){
-    SliderGroup.group.add(new Slider(x,y,w,h,label));
+  void createSliderGroups(){
+    sliderGroups.add(new SliderGroup("Test",4, 20, 20));
+  }
+}
+class SliderGroup{
+  int x;
+  int y;
+  int vGap = 50;
+  int hGap = 150;
+  int w = 40;
+  int h = 140;
+  ArrayList <Slider> group;
+  SliderGroup(String l, int s, int _x, int _y){
+    x = _x;
+    y = _y;
+    create(l,s);
+  }
+  void create(String label, int sliderNum){
+    pushMatrix();
+    translate(x, y);
+    group = new ArrayList<Slider>();
+    for(int i = 0; i < sliderNum; i++){
+      group.add(new Slider(0, i*hGap, w, h, label));              
+    }
+    popMatrix();
   }
   
-  void drawButtons(){
-    for (Slider s: sliders){
-      lLim = s.run();
+  void update(){
+    for (Slider s : group){
+      s.create();
     }
   }
 }
@@ -50,22 +80,4 @@ class Slider{
 class Button{
   Button(){
   }
-}
-
-class SliderGroup{
-  int vGap = 50;
-  int hGap = 150;
-  int w = 40;
-  int h = 140;
-  ArrayList <Slider> group;
-  SliderGroup(String l, int s){
-    create(l,s);
-  }
-  void create(String label, int sliderNum){
-    group = new ArrayList<Slider>();
-    for(int i = 0; i < sliderNum; i++){
-      group.add(new Slider(0, i*hGap, w, h, label));                  
-    }
-  }
-  
 }
