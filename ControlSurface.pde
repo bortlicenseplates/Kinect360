@@ -1,4 +1,4 @@
-class Controller extends PApplet{
+class Controller extends PApplet implements ControlValues{
   ArrayList<SliderGroup> sliderGroups;
   Controller(){
     super();
@@ -8,7 +8,7 @@ class Controller extends PApplet{
   }
   
   void settings() {
-    size(500,600);
+    size(control_w,control_h);
   }
   void setup(){
     sliderGroups = new ArrayList<SliderGroup>();
@@ -56,6 +56,13 @@ class SliderGroup{
     }
   }
 }
+
+interface ControlValues{
+  static int control_w = 500;
+  static int control_h = 600;
+}
+
+
 
 class Slider{
   int x, y, w, h;
